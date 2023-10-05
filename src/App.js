@@ -1,23 +1,19 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [data, setData] = useState(null);
+
+  const fetchData = async () => {
+    const response = await fetch('http://localhost:3000/clientx');
+    const data = await response.json();
+    setData(data);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button className="fetch-button" onClick={fetchData}>Fetch Data</button>
+      {data && <div className="data-container">{JSON.stringify(data)}</div>}
     </div>
   );
 }
